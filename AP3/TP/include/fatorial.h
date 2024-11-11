@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-int fatorialRecursivo(int n);
-int fatorialIterativo(int n);
+long double fatorialRecursivo(long double n);
+long double fatorialIterativo(long double n);
 
 #endif //FATORIAL_H

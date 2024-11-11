@@ -1,6 +1,6 @@
 # Variáveis
 CC = g++
-CFLAGS = -Iinclude -Wall
+CFLAGS = -Iinclude -Wall -pg
 SRC_DIR = src
 OBJ_DIR = obj
 BIN_DIR = bin
@@ -14,7 +14,7 @@ all: $(EXEC)
 
 # Linkar os objetos para gerar o executável
 $(EXEC): $(OBJ)
-	$(CC) $(OBJ) -o $(EXEC)
+	$(CC) $(OBJ) -o $(EXEC) -pg 
 
 # Compilar fatorial.cpp
 $(OBJ_DIR)/fatorial.o: $(SRC_DIR)/fatorial.cpp include/fatorial.h
@@ -30,8 +30,12 @@ $(OBJ_DIR)/main.o: $(SRC_DIR)/main.cpp include/fatorial.h include/fibonacci.h
 
 # Limpeza dos arquivos compilados
 clean:
-	rm -f $(OBJ_DIR)/*.o $(EXEC)
+	rm -f $(OBJ_DIR)/*.o $(EXEC) gmon.out
 
 # Executar o programa
 run: all
-	./$(EXEC)
+	time ./$(EXEC) -fibonacci -r 40
+
+# Profiling com gprof
+profile: run
+	gprof $(EXEC) gmon.out > gprof_report.txt
